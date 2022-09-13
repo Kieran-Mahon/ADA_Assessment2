@@ -11,11 +11,9 @@ public abstract class Subdivision {
     protected int height;
 
     public Subdivision(int width, int height) {
-        //probably remove this part in the future
-        if ((width <= 0) || (width > 6) || (height <= 0) || (height > 6)) {
-            throw new IllegalArgumentException("Size too large");
+        if ((width <= 0) ||(height <= 0)) {
+            throw new IllegalArgumentException("Size too small");
         }
-        //^^^^^^
         this.width = width;
         this.height = height;
         loadLandValues();
@@ -33,11 +31,16 @@ public abstract class Subdivision {
     }
     
     protected int getCellPrice(Cell cell) {
+        //If out of land values bounds then return a price of $0
+        if ((cell.width > 6) ||(cell.height > 6)) {
+            System.out.println("Area over 6, W:" + cell.width + " H:" + cell.height);
+            return 0;
+        }
         return this.landValues[cell.width - 1][cell.height - 1];
     }
     
     public abstract void calculate();
-
+    
     protected class Cell {
 
         protected int x;
@@ -55,5 +58,13 @@ public abstract class Subdivision {
             this.height = height;
         }
 
+        @Override
+        public String toString() {
+            return "(X:" + this.x +" Y:" + this.y + " Width:" + this.width + " Height:" + this.height + ")";
+        }
+        
+        public Cell cloneCell() {
+            return new Cell(this.x, this.y, this.width, this.height);
+        }
     }
 }
