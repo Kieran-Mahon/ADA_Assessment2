@@ -6,14 +6,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Label;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,28 +17,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-/*
- * @author Kieran
- */
 public class SubdivisionGUI {
     
-        private final JFrame frame;
+    private final JFrame frame;
         
     public SubdivisionGUI() {
         this.frame = setUpJFrame();
         changePanel(new LandCreatorPanel(this));
-        
-        
-            while (true) {
-                try {
-                    Thread.sleep(300);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(SubdivisionGUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-            frame.repaint();
-            
-            }
     }
     
     //Set up frame

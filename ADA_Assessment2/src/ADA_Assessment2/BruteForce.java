@@ -2,9 +2,6 @@ package ADA_Assessment2;
 
 import java.util.ArrayList;
 
-/*
- * @author Kieran
- */
 public class BruteForce extends Subdivision {
     
     public BruteForce(int width, int height) {
@@ -25,11 +22,6 @@ public class BruteForce extends Subdivision {
         
         //Return list
         return bestDivision.list;
-    }
-    
-    @Override
-    public int getPrice() {
-        return this.price;
     }
     
     //Find best division then pass it up

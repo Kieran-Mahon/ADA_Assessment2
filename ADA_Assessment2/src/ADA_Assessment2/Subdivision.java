@@ -2,9 +2,6 @@ package ADA_Assessment2;
 
 import java.util.ArrayList;
 
-/*
- * @author Kieran
- */
 public abstract class Subdivision {
 
     protected final int divideCost = 50;
@@ -54,7 +51,9 @@ public abstract class Subdivision {
     
     //Used to get the price of the results (a value of -1 means the calculation
     //hasn't been done yet
-    public abstract int getPrice();
+    public int getPrice() {
+        return this.price;
+    }
     
     //Text display of a division
     public String textDisplay(ArrayList<Land> landList, int price) {
