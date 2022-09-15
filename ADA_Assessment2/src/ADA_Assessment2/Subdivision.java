@@ -11,12 +11,19 @@ public abstract class Subdivision {
     protected int height;
 
     public Subdivision(int width, int height) {
+        //Make sure the number is not less or equal to 0
         if ((width <= 0) ||(height <= 0)) {
             throw new IllegalArgumentException("Size too small"); // kieran gets this error a lot with girls
         }
+        
+        //Set width and height
         this.width = width;
         this.height = height;
+        //Load land values
         loadLandValues();
+        
+        //Display created message
+        System.out.println("Created a " + this.width + " by " + this.height + " land! \n");
     }
     
     private void loadLandValues() {
@@ -30,28 +37,25 @@ public abstract class Subdivision {
             {200, 450, 500, 700, 800, 900}}; //6
     }
     
-    protected int getCellPrice(Cell cell) {
+    //Get price of 
+    protected int getLandPrice(Land land) {
         //If out of land values bounds then return a price of $0
-        if ((cell.width > 6) ||(cell.height > 6)) {
-            System.out.println("Area over 6, W:" + cell.width + " H:" + cell.height);
+        if ((land.width > 6) ||(land.height > 6)) {
             return 0;
         }
-        return this.landValues[cell.width - 1][cell.height - 1];
+        return this.landValues[land.width - 1][land.height - 1];
     }
     
     public abstract void calculate();
     
-    protected class Cell {
+    protected class Land {
 
         protected int x;
         protected int y;
         protected int width;
         protected int height;
-        
-        protected Cell cellA;
-        protected Cell cellB;
 
-        public Cell(int x, int y, int width, int height) {
+        public Land(int x, int y, int width, int height) {
             this.x = x;
             this.y = y;
             this.width = width;
@@ -61,10 +65,6 @@ public abstract class Subdivision {
         @Override
         public String toString() {
             return "(X:" + this.x +" Y:" + this.y + " Width:" + this.width + " Height:" + this.height + ")";
-        }
-        
-        public Cell cloneCell() {
-            return new Cell(this.x, this.y, this.width, this.height);
         }
     }
 }
