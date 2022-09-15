@@ -1,5 +1,7 @@
 package ADA_Assessment2;
 
+import java.util.ArrayList;
+
 /*
  * @author Kieran
  */
@@ -10,8 +12,12 @@ public class Exact extends Subdivision {
     }
 
     @Override
-    public void calculate() {
+    public ArrayList<Land> calculate() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public int getPrice() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

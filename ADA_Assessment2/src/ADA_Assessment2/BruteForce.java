@@ -11,17 +11,31 @@ public class BruteForce extends Subdivision {
         super(width, height);
     }
 
-    // Run the class methods for finding the best division and print results?
     @Override
-    public void calculate() {
+    public ArrayList<Land> calculate() {
+        //Call the divide function
         Land startLand = new Land(0, 0, this.width, this.height);
         BestDivision bestDivision = divide(startLand);
-        System.out.println(textDisplay(bestDivision));
+        
+        //Assign price
+        this.price = bestDivision.price;
+        
+        //Show text output
+        System.out.println(textDisplay(bestDivision.list, bestDivision.price));
+        
+        //Return list
+        return bestDivision.list;
     }
-
+    
+    @Override
+    public int getPrice() {
+        return this.price;
+    }
+    
     //Find best division then pass it up
     private BestDivision divide(Land land) {
         //Set best as the current division (no division)
+        BestDivision best = new BestDivision(getLandPrice(land), land);
         
         //Vertical
         for (int i = 1; i < land.width; i++) {
@@ -68,41 +82,6 @@ public class BruteForce extends Subdivision {
             }
         }
         return best;
-    }
-    
-    //Text version of the best division
-    private String textDisplay(BestDivision bestDivision) {
-        //Add list to display
-        String toReturn = bestDivision.list.toString() + "\n";
-        
-        //Convert the land into an array format
-        int[][] displayArray  = new int[width][height];
-        int num = 0;
-        for (Land land : bestDivision.list) {
-            num++;
-            for (int w = 0; w < land.width; w++) {
-                for (int h = 0; h < land.height; h++) {
-                    displayArray[land.x + w][land.y + h] = num;
-                }
-            }
-        }
-        
-        //Convert array format into string format
-        for (int h = 0; h < height; h++) {
-            for (int w = 0; w < width; w++) {
-                toReturn += displayArray[w][h] ;
-                if (w != width - 1) {
-                    toReturn += " ";
-                }
-            }
-            toReturn += "\n";
-        }
-        
-        //Add price
-        toReturn += "\nPrice: $" + bestDivision.price;
-        
-        //Return the string
-        return toReturn;
     }
     
     //Class which holds division information

@@ -1,5 +1,7 @@
 package ADA_Assessment2;
 
+import java.util.ArrayList;
+
 /*
  * @author Kieran
  */
@@ -9,11 +11,12 @@ public abstract class Subdivision {
     protected int[][] landValues;
     protected int width;
     protected int height;
+    protected int price = -1;
 
     public Subdivision(int width, int height) {
         //Make sure the number is not less or equal to 0
         if ((width <= 0) ||(height <= 0)) {
-            throw new IllegalArgumentException("Size too small"); // kieran gets this error a lot with girls
+            throw new IllegalArgumentException("Size too small");
         }
         
         //Set width and height
@@ -29,7 +32,7 @@ public abstract class Subdivision {
     private void loadLandValues() {
         this.landValues = new int[][]{
             //1   2    3    4    5    6
-            {20, 40, 100, 130, 150, 200}, //   1
+            {2000, 40, 100, 130, 150, 200}, //   1
             {40, 140, 250, 320, 400, 450}, //  2
             {100, 250, 350, 420, 450, 500}, // 3
             {130, 320, 420, 500, 600, 700}, // 4
@@ -37,7 +40,7 @@ public abstract class Subdivision {
             {200, 450, 500, 700, 800, 900}}; //6
     }
     
-    //Get price of 
+    //Get price of a piece of land
     protected int getLandPrice(Land land) {
         //If out of land values bounds then return a price of $0
         if ((land.width > 6) ||(land.height > 6)) {
@@ -46,25 +49,45 @@ public abstract class Subdivision {
         return this.landValues[land.width - 1][land.height - 1];
     }
     
-    public abstract void calculate();
+    //Used to start and get the division method's results
+    public abstract ArrayList<Land> calculate();
     
-    protected class Land {
-
-        protected int x;
-        protected int y;
-        protected int width;
-        protected int height;
-
-        public Land(int x, int y, int width, int height) {
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
+    //Used to get the price of the results (a value of -1 means the calculation
+    //hasn't been done yet
+    public abstract int getPrice();
+    
+    //Text display of a division
+    public String textDisplay(ArrayList<Land> landList, int price) {
+        //Add list to string
+        String toReturn = landList.toString() + "\n";
+        
+        //Convert the land into an array format
+        int[][] displayArray  = new int[this.width][this.height];
+        int num = 0;
+        for (Land land : landList) {
+            num++;
+            for (int w = 0; w < land.width; w++) {
+                for (int h = 0; h < land.height; h++) {
+                    displayArray[land.x + w][land.y + h] = num;
+                }
+            }
         }
-
-        @Override
-        public String toString() {
-            return "(X:" + this.x +" Y:" + this.y + " Width:" + this.width + " Height:" + this.height + ")";
+        
+        //Convert array format into string format
+        for (int h = 0; h < this.height; h++) {
+            for (int w = 0; w < this.width; w++) {
+                toReturn += displayArray[w][h] ;
+                if (w != this.width - 1) {
+                    toReturn += " ";
+                }
+            }
+            toReturn += "\n";
         }
+        
+        //Add price
+        toReturn += "\nPrice: $" + price;
+        
+        //Return the string
+        return toReturn;
     }
 }
