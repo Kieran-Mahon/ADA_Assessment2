@@ -17,6 +17,7 @@ public class BruteForce extends Subdivision {
         super(width, height);
     }
 
+    // Run the class methods for finding the best division and print results?
     @Override
     public void calculate() {
         Cell root = new Cell(0, 0, width, height);
@@ -27,6 +28,7 @@ public class BruteForce extends Subdivision {
         System.out.println(bd.price);
     }
     
+    // Find the best division by comparing each comnbination across the cells
     private BestDivision divide(Cell cell) {
         //Current division
         System.out.println(cell);
@@ -74,6 +76,7 @@ public class BruteForce extends Subdivision {
         return best;
     }
     
+    // Display the best division? Or every divisio
     private String display(BestDivision bd) {
         int[][] displayArray  = new int[width][height];
         
