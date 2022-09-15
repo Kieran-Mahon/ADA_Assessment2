@@ -12,7 +12,7 @@ public abstract class Subdivision {
 
     public Subdivision(int width, int height) {
         if ((width <= 0) ||(height <= 0)) {
-            throw new IllegalArgumentException("Size too small");
+            throw new IllegalArgumentException("Size too small"); // kieran gets this error a lot with girls
         }
         this.width = width;
         this.height = height;
