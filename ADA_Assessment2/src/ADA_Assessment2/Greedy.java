@@ -11,5 +11,6 @@ public class Greedy extends Subdivision {
     @Override
     public ArrayList<Land> calculate() {
         Land startLand = new Land(0, 0, this.width, this.height);
+        return null;
     }
 }

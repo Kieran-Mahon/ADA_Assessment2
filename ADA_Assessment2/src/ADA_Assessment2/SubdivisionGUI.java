@@ -20,7 +20,7 @@ import javax.swing.border.EmptyBorder;
 public class SubdivisionGUI {
     
     private final JFrame frame;
-        
+    
     public SubdivisionGUI() {
         this.frame = setUpJFrame();
         changePanel(new LandCreatorPanel(this));
@@ -180,21 +180,36 @@ public class SubdivisionGUI {
     
     private class LandDisplayPanel extends JPanel {
         
-        private SubdivisionGUI gui;
-        
         public LandDisplayPanel(SubdivisionGUI gui, Subdivision subdivision) {
-            super(new BorderLayout());
-            this.gui = gui;
+            super(new BorderLayout(10, 10));
             
-            //Create land areas
+            //Create pre division land area
             Land preDivision = new Land(0, 0, subdivision.width, subdivision.height);
+            JLabel preNameLabel = new JLabel("Original Area", JLabel.CENTER);
             LandArea beforeSubdivsion = new LandArea(preDivision);
+            JLabel preCostLabel = new JLabel("$" + Integer.toString(subdivision.getLandPrice(preDivision)), JLabel.CENTER);
+            
+            JPanel preDivisionPanel = new JPanel(new BorderLayout(10,10));
+            preDivisionPanel.add(preNameLabel, BorderLayout.NORTH);
+            preDivisionPanel.add(beforeSubdivsion, BorderLayout.CENTER);
+            preDivisionPanel.add(preCostLabel, BorderLayout.SOUTH);
+            
+            JLabel postNameLabel = new JLabel("Subdivided Area", JLabel.CENTER);
             LandArea afterSubdivsion = new LandArea(subdivision.calculate(), subdivision.width, preDivision.height);
+            JLabel postCostLabel = new JLabel("$" + Integer.toString(subdivision.getPrice()), JLabel.CENTER);
+            
+            JPanel postDivisionPanel = new JPanel(new BorderLayout(10,10));
+            postDivisionPanel.add(postNameLabel, BorderLayout.NORTH);
+            postDivisionPanel.add(afterSubdivsion, BorderLayout.CENTER);
+            postDivisionPanel.add(postCostLabel, BorderLayout.SOUTH);
             
             //Combine land areas into one panel
             JPanel landAreas = new JPanel();
-            landAreas.add(beforeSubdivsion, BorderLayout.WEST);
-            landAreas.add(afterSubdivsion, BorderLayout.EAST);
+            landAreas.add(preDivisionPanel, BorderLayout.WEST);
+            landAreas.add(postDivisionPanel, BorderLayout.EAST);
+            
+            //Land information
+            JLabel infoLabel = new JLabel("Each colour is a different subdivision", JLabel.CENTER);
             
             //New area button
             JButton newAreaButton = new JButton("New Area");
@@ -206,7 +221,8 @@ public class SubdivisionGUI {
             });
             
             //Add elements to panel
-            super.add(landAreas, BorderLayout.CENTER);
+            super.add(landAreas, BorderLayout.NORTH);
+            super.add(infoLabel, BorderLayout.CENTER);
             super.add(newAreaButton, BorderLayout.SOUTH);
         }
         
@@ -216,14 +232,12 @@ public class SubdivisionGUI {
             private final int height;
             private int scale;
             private final ArrayList<Land> landList;
-            private String name;
             
             public LandArea(Land land) {
                 this.landList = new ArrayList<>();
                 this.landList.add(land);
                 this.width = land.width;
                 this.height = land.height;
-                this.name = "Land";
                 setUpPanel();
             }
             
@@ -235,15 +249,9 @@ public class SubdivisionGUI {
             }
             
             private void setUpPanel() {
-                //Find larger value to scale off
-                if (this.width > this.height) {
-                    this.scale = 300 / this.width;
-                } else {
-                    this.scale = 300 / this.height;
-                }
+                this.scale = 95;
                 super.setPreferredSize(new Dimension(this.width * this.scale, this.height * this.scale));
                 super.setBackground(Color.lightGray);
-                //super.add(new Label(this.name));
             }
             
             @Override
@@ -264,11 +272,10 @@ public class SubdivisionGUI {
                 }
                 
                 //Draw land on screen
-                int pixelScaleValue = 300 / this.width;
                 for (int x = 0; x < displayArray.length; x++) {
                     for (int y = 0; y < displayArray[0].length; y++) {
                         g.setColor(displayArray[x][y]);
-                        g.fillRect(x * pixelScaleValue, y * pixelScaleValue, pixelScaleValue, pixelScaleValue);
+                        g.fillRect(x * this.scale + 2, y * this.scale + 2, this.scale - 4, this.scale - 4);
                     }
                 }
             }
@@ -276,7 +283,18 @@ public class SubdivisionGUI {
             //Used to color land
             private Color getRandomColor() {
                 Random rand = new Random();
-                return new Color(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255));
+                int r;
+                int g;
+                int b;
+                //Make sure no colours are white to make the screen clearer
+                while (true) {
+                    r = rand.nextInt(255);
+                    g = rand.nextInt(255);
+                    b = rand.nextInt(255);
+                    if ((r < 180) && (g < 180) && (b < 180)) {
+                        return new Color(r, g, b);
+                    }
+                }
             }
         }
     }
