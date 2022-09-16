@@ -10,6 +10,6 @@ public class Greedy extends Subdivision {
 
     @Override
     public ArrayList<Land> calculate() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Land startLand = new Land(0, 0, this.width, this.height);
     }
 }
