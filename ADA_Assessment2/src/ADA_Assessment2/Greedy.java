@@ -65,5 +65,4 @@ public class Greedy extends Subdivision {
             this.list.addAll(aSide.list);
             this.list.addAll(bSide.list);
         }
-    }
 }
