@@ -26,6 +26,7 @@ public class Greedy extends Subdivision {
     }
     
     public BestDivision findGreedy(Land startLand) {
+        BestDivision bestDivision = new BestDivision(getLandPrice(startLand), startLand);
         int best = 0;
         int xTrack = 0;
         int yTrack = 0;
@@ -37,8 +38,13 @@ public class Greedy extends Subdivision {
                     xTrack = i;
                     yTrack = j;
                 }
+            
+            Land a = new Land(0, 0, xTrack, yTrack);
+            Land b = new Land(xTrack, yTrack, startLand.width-xTrack, startLand.height-yTrack);
         
-        
+            //Get the best divisions from side A and side B
+            BestDivision bestA = findGreedy(a);
+            BestDivision bestB = findGreedy(b);
         
         int cost = startLand.height * this.divideCost;
     }
