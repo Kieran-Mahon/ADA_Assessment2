@@ -5,11 +5,19 @@ public class TestClass {
     public static void main(String[] args) {
         // Testing 
         
-        // Bruite force
-        BruteForce bruteForce = new BruteForce(6, 3);
+        // Brute force
+        BruteForce bruteForce = new BruteForce(7, 7);
         bruteForce.calculate();
-        assert bruteForce.price == 550: "Not correct";
+        assert bruteForce.price == 990: "Not correct";
         
+        // Greedy
+        Greedy greedy = new Greedy(7, 7);
+        greedy.calculate();
+        assert greedy.price == 0: "Not correct";
         
+        // Exact
+        Exact exact = new Exact(7, 7);
+        exact.calculate();
+        assert exact.price == 990 "Not correct";
     }
 }
