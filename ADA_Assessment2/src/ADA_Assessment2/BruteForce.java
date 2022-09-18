@@ -73,6 +73,7 @@ public class BruteForce extends Subdivision {
                 best.price -= cost;
             }
         }
+        
         return best;
     }
     

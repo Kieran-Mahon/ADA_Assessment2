@@ -24,56 +24,128 @@ public class Greedy extends Subdivision {
         // Return list
         return bestDivision.list;
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
-    public BestDivision findGreedy(Land startLand) {
-        BestDivision bestDivisions = new BestDivision(getLandPrice(startLand), startLand);
-
-        if (startLand.x < this.width && startLand.y < this.height) {
-            int best = 0;
-            int xTrack = startLand.x;
-            int yTrack = startLand.y;
-
-            int valueRangeI = (this.landValues.length > startLand.height
-                    ? startLand.height : this.landValues.length);
-
-            int valueRangeJ = (this.landValues[0].length > startLand.width
-                    ? startLand.width : this.landValues.length);
-
-            for (int i = 0; i < valueRangeI; i++) {
-                for (int j = 0; j < valueRangeJ; j++) {
-                    if (this.landValues[i][j] > best) {
-                        best = this.landValues[i][j];
-                        yTrack = i + 1;
-                        xTrack = j + 1;
-                    }
-                }
-            }
-
-            if (xTrack == this.width && yTrack == this.height) {
-                return bestDivisions;
-            }
-
-            xTrack += startLand.x;
-            yTrack += startLand.y;
-
-            int downWidth = 6 > this.width - xTrack ? this.width - xTrack : 6;
-            
-            Land right = new Land(xTrack, startLand.y, startLand.width - xTrack, startLand.height);
-            Land down = new Land(startLand.x, yTrack, downWidth, startLand.height - yTrack);
-
-            //int cost = startLand.height * this.divideCost + xTrack * this.divideCost;
-
-            // Get the best divisions from side A and side B
-            BestDivision bestRight = findGreedy(right);
-            BestDivision bestDown = findGreedy(down);
-
-            bestDivisions = new BestDivision(bestRight, bestDown);
-            
-            //bestDivisions.price -= cost;
-        }
-
-        return bestDivisions;
-    }
+//    public BestDivision findGreedy(Land startLand) {
+//        BestDivision bestDivisions = new BestDivision(getLandPrice(startLand), startLand);
+//
+//        if (startLand.x < this.width && startLand.y < this.height) {
+//            int best = 0;
+//            int xTrack = startLand.x;
+//            int yTrack = startLand.y;
+//
+//            int valueRangeI = (this.landValues.length > startLand.height
+//                    ? startLand.height : this.landValues.length);
+//
+//            int valueRangeJ = (this.landValues[0].length > startLand.width
+//                    ? startLand.width : this.landValues.length);
+//
+//            for (int i = 0; i < valueRangeI; i++) {
+//                for (int j = 0; j < valueRangeJ; j++) {
+//                    if (this.landValues[i][j] > best) {
+//                        best = this.landValues[i][j];
+//                        yTrack = i + 1;
+//                        xTrack = j + 1;
+//                    }
+//                }
+//            }
+//
+//            if (xTrack == this.width && yTrack == this.height) {
+//                return bestDivisions;
+//            }
+//
+//            xTrack += startLand.x;
+//            yTrack += startLand.y;
+//
+//            int downWidth = 6 > this.width - xTrack ? this.width - xTrack : 6;
+//            
+//            Land right = new Land(xTrack, startLand.y, startLand.width - xTrack, startLand.height);
+//            Land down = new Land(startLand.x, yTrack, downWidth, startLand.height - yTrack);
+//
+//            //int cost = startLand.height * this.divideCost + xTrack * this.divideCost;
+//
+//            // Get the best divisions from side A and side B
+//            BestDivision bestRight = findGreedy(right);
+//            BestDivision bestDown = findGreedyDown(down);
+//
+//            bestDivisions = new BestDivision(bestRight, bestDown);
+//            
+//            //bestDivisions.price -= cost;
+//        }
+//
+//        return bestDivisions;
+//    }
+//
+//    private BestDivision findGreedyDown(Land startLand) {
+//        BestDivision bestDivisions = new BestDivision(getLandPrice(startLand), startLand);
+//
+//        if (startLand.x < this.width && startLand.y < this.height) {
+//            int best = 0;
+//            int xTrack = startLand.x;
+//            int yTrack = startLand.y;
+//
+//            int valueRangeI = (this.landValues.length > startLand.height
+//                    ? startLand.height : this.landValues.length);
+//
+//            int valueRangeJ = (this.landValues[0].length > startLand.width
+//                    ? startLand.width : this.landValues.length);
+//
+//            for (int i = 0; i < valueRangeI; i++) {
+//                for (int j = 0; j < valueRangeJ; j++) {
+//                    if (this.landValues[i][j] > best) {
+//                        best = this.landValues[i][j];
+//                        yTrack = i + 1;
+//                        xTrack = j + 1;
+//                    }
+//                }
+//            }
+//
+//            if (xTrack == this.width && yTrack == this.height) {
+//                return bestDivisions;
+//            }
+//
+//            xTrack += startLand.x;
+//            yTrack += startLand.y;
+//
+//            int downWidth = 6 > this.width - xTrack ? this.width - xTrack : 6;
+//            
+//
+//            Land down = new Land(startLand.x, yTrack, downWidth, startLand.height - yTrack);
+//
+//            //int cost = startLand.height * this.divideCost + xTrack * this.divideCost;
+//
+//            // Continue down
+//            BestDivision bestDown = findGreedyDown(down);
+//
+//            bestDivisions = new BestDivision(bestDivisions, bestDown);
+//            
+//            //bestDivisions.price -= cost;
+//        }
+//
+//        return bestDivisions;
+//    }
 
     private class BestDivision {
 
