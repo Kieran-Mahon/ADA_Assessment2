@@ -28,7 +28,7 @@ public class Greedy extends Subdivision {
     public BestDivision findGreedy(Land startLand) {
         BestDivision bestDivisions = new BestDivision(getLandPrice(startLand), startLand);
 
-        if (startLand.width > this.width && startLand.height > this.height) {
+        if (startLand.x < this.width && startLand.y < this.height) {
             int best = 0;
             int xTrack = startLand.x;
             int yTrack = startLand.y;
