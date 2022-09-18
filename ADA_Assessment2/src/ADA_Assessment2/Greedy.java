@@ -8,61 +8,86 @@ public class Greedy extends Subdivision {
         super(width, height);
     }
 
-    // chooses the best division value with the current piece of land
+    // Chooses the best division value with the current piece of land
     @Override
     public ArrayList<Land> calculate() {
-        //Call the divide function
+        // Call the divide function
         Land startLand = new Land(0, 0, this.width, this.height);
         BestDivision bestDivision = findGreedy(startLand);
-        
-        //Assign price
+
+        // Assign price
         this.price = bestDivision.price;
-        
-        //Show text output
+
+        // Show text output
         System.out.println(textDisplay(bestDivision.list, bestDivision.price));
-        
-        //Return list
+
+        // Return list
         return bestDivision.list;
     }
-    
+
     public BestDivision findGreedy(Land startLand) {
-        BestDivision bestDivision = new BestDivision(getLandPrice(startLand), startLand);
-        int best = 0;
-        int xTrack = 0;
-        int yTrack = 0;
-        
-        for (int i = 0; i < this.landValues.length; i++)
-            for (int j = 0; j < this.landValues[0].length; j++)
-                if (this.landValues[i][j] > best) {
-                    best = this.landValues[i][j];
-                    xTrack = i;
-                    yTrack = j;
+        BestDivision bestDivisions = new BestDivision(getLandPrice(startLand), startLand);
+
+        if (startLand.width > this.width && startLand.height > this.height) {
+            int best = 0;
+            int xTrack = startLand.x;
+            int yTrack = startLand.y;
+
+            int valueRangeI = (this.landValues.length > startLand.height
+                    ? startLand.height : this.landValues.length);
+
+            int valueRangeJ = (this.landValues[0].length > startLand.width
+                    ? startLand.width : this.landValues.length);
+
+            for (int i = 0; i < valueRangeI; i++) {
+                for (int j = 0; j < valueRangeJ; j++) {
+                    if (this.landValues[i][j] > best) {
+                        best = this.landValues[i][j];
+                        yTrack = i + 1;
+                        xTrack = j + 1;
+                    }
                 }
-            
-            Land a = new Land(0, 0, xTrack, yTrack);
-            Land b = new Land(xTrack, yTrack, startLand.width-xTrack, startLand.height-yTrack);
-        
-            //Get the best divisions from side A and side B
+            }
+
+            if (xTrack == this.width && yTrack == this.height) {
+                return bestDivisions;
+            }
+
+            xTrack += startLand.x;
+            yTrack += startLand.y;
+
+            Land a = new Land(xTrack, startLand.y, startLand.width - xTrack, startLand.height);
+            Land b = new Land(startLand.x, yTrack, xTrack, startLand.height - yTrack);
+
+            int cost = startLand.height * this.divideCost + xTrack * this.divideCost;
+
+            // Get the best divisions from side A and side B
             BestDivision bestA = findGreedy(a);
             BestDivision bestB = findGreedy(b);
-        
-        int cost = startLand.height * this.divideCost;
+
+            bestDivisions = new BestDivision(bestA, bestB);
+            bestDivisions.price -= cost;
+        }
+
+        return bestDivisions;
     }
 
     private class BestDivision {
+
         private int price;
         private ArrayList<Land> list = new ArrayList<>();
-        
-        //Constructor used for 1 piece of land
+
+        // Constructor used for 1 piece of land
         public BestDivision(int price, Land cell) {
             this.price = price;
             this.list.add(cell);
         }
-        
-        //Constructor used for combining two best divisions
+
+        // Constructor used for combining two best divisions
         public BestDivision(BestDivision aSide, BestDivision bSide) {
             this.price = aSide.price + bSide.price;
             this.list.addAll(aSide.list);
             this.list.addAll(bSide.list);
         }
+    }
 }
