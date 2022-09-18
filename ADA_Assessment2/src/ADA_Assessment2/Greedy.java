@@ -2,6 +2,10 @@ package ADA_Assessment2;
 
 import java.util.ArrayList;
 
+/*
+
+
+*/
 public class Greedy extends Subdivision {
 
     public Greedy(int width, int height) {
@@ -26,7 +30,7 @@ public class Greedy extends Subdivision {
     }
 
     private BestDivision findGreedy(Land land) {
-        // Set best as the current division (no division)
+        // Set best as the current division
         BestDivision best = new BestDivision(getLandPrice(land), land);
 
         // Vertical
