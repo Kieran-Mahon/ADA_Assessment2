@@ -1,10 +1,23 @@
 package ADA_Assessment2;
 
 public class TestClass {
-    
+
     public static void main(String[] args) {
-        //BruteForce bruteForce = new BruteForce(6, 3);
-        //bruteForce.calculate();
-        SubdivisionGUI gui = new SubdivisionGUI();
+        // Testing 
+
+        // Brute force
+        BruteForce bruteForce = new BruteForce(7, 7);
+        bruteForce.calculate();
+        assert bruteForce.price == 990 : "Not correct";
+
+        // Greedy
+        Greedy greedy = new Greedy(7, 7);
+        greedy.calculate();
+        assert greedy.price == 0 : "Not correct";
+
+        // Exact
+        Exact exact = new Exact(7, 7);
+        exact.calculate();
+        assert exact.price == 990 : "Not correct";
     }
 }
