@@ -14,7 +14,7 @@ public class Greedy extends Subdivision {
         // Call the divide function
         Land startLand = new Land(0, 0, this.width, this.height);
         BestDivision bestDivision = findGreedy(startLand);
-        
+
         // Assign price
         this.price = bestDivision.price;
 
@@ -24,118 +24,102 @@ public class Greedy extends Subdivision {
         // Return list
         return bestDivision.list;
     }
-    
+
     private BestDivision findGreedy(Land land) {
-        //Set best as the current division (no division)
+        // Set best as the current division (no division)
         BestDivision best = new BestDivision(getLandPrice(land), land);
-        
-        //Vertical
+
+        // Vertical
         for (int i = 1; i < land.width; i++) {
             //Divide the land into 2 parts (A and B)
             Land a = new Land(land.x, land.y, i, land.height);
             Land b = new Land(land.x + i, land.y, land.width - i, land.height);
-            
-            //Calculate the cost of the division
+
+            // Calculate the cost of the division
             int cost = land.height * this.divideCost;
-            
-            //Figure out which one costs the most
+
+            // Figure out which one costs the most
             Land mostExpensiveLand;
             Land otherLand;
             if (getLandPrice(a) > getLandPrice(b)) {
-                //A costs more
+                // A costs more
                 mostExpensiveLand = a;
                 otherLand = b;
-            } else {
-                //B costs more (or is equal)
+            }
+            else {
+                // B costs more (or is equal)
                 mostExpensiveLand = b;
                 otherLand = a;
             }
-            
-            //Add A and B to a best division for easier calculation
-            //Add the other land and its price
-            BestDivision divison = new BestDivision(getLandPrice(otherLand), otherLand); 
+
+            // Add A and B to a best division for easier calculation
+            // Add the other land and its price
+            BestDivision divison = new BestDivision(getLandPrice(otherLand), otherLand);
             divison.list.add(mostExpensiveLand); //Add other land
             divison.price += getLandPrice(mostExpensiveLand); //Add most expensive price
             divison.price -= cost; //Remove cost
-            
-            //Check if this divide better than the current best
+
+            // Check if this divide better than the current best
             if ((divison.price) > best.price) {
                 best = divison;
             }
         }
-        
-        //Horizontal
+
+        // Horizontal
         for (int i = 1; i < land.height; i++) {
             //Divide the land into 2 parts (A and B)
             Land a = new Land(land.x, land.y, land.width, i);
             Land b = new Land(land.x, land.y + i, land.width, land.height - i);
-            
-            //Calculate the cost of the division
+
+            // Calculate the cost of the division
             int cost = land.width * this.divideCost;
-            
-            //Figure out which one costs the most
+
+            // Figure out which one costs the most
             Land mostExpensiveLand;
             Land otherLand;
+
             if (getLandPrice(a) > getLandPrice(b)) {
                 //A costs more
                 mostExpensiveLand = a;
                 otherLand = b;
-            } else {
+            }
+            else {
                 //B costs more (or is equal)
                 mostExpensiveLand = b;
                 otherLand = a;
             }
-            
-            //Add A and B to a best division for easier calculation
-            //Add the other land and its price
-            BestDivision divison = new BestDivision(getLandPrice(otherLand), otherLand); 
+
+            // Add A and B to a best division for easier calculation
+            // Add the other land and its price
+            BestDivision divison = new BestDivision(getLandPrice(otherLand), otherLand);
             divison.list.add(mostExpensiveLand); //Add other land
             divison.price += getLandPrice(mostExpensiveLand); //Add most expensive price
             divison.price -= cost; //Remove cost
-            
-            //Check if this divide is the best
+
+            // Check if this divide is the best
             if ((divison.price) > best.price) {
                 best = divison;
             }
         }
-        
-        //If the size of the list is NOT 1 then it is NOT the original land
-        //Go down the most expensive division
+
+        // If the size of the list is NOT 1 then it is NOT the original land
+        // Go down the most expensive division
         if (best.list.size() != 1) {
-            //Index 0 means the OTHER land which is not touched
+            // Index 0 means the OTHER land which is not touched
             BestDivision tempBest = new BestDivision(best.price, best.list.get(0));
-            //Index 1 means the most expensive land which gets checked
+
+            // Index 1 means the most expensive land which gets checked
             BestDivision divisionFound = findGreedy(best.list.get(1));
+
             tempBest.list.addAll(divisionFound.list);
             tempBest.price += divisionFound.price - getLandPrice(best.list.get(1));
-            
-            //Set best division
+
+            // Set best division
             best = tempBest;
         }
-        
+
         return best;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
 //    public BestDivision findGreedy(Land startLand) {
 //        BestDivision bestDivisions = new BestDivision(getLandPrice(startLand), startLand);
@@ -235,7 +219,6 @@ public class Greedy extends Subdivision {
 //
 //        return bestDivisions;
 //    }
-
     private class BestDivision {
 
         private int price;

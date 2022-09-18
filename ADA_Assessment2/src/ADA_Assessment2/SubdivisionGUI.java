@@ -18,14 +18,14 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 public class SubdivisionGUI {
-    
+
     private final JFrame frame;
-    
+
     public SubdivisionGUI() {
         this.frame = setUpJFrame();
         changePanel(new LandCreatorPanel(this));
     }
-    
+
     //Set up frame
     private JFrame setUpJFrame() {
         JFrame tempFrame = new JFrame("Land Subdivider");
@@ -35,34 +35,34 @@ public class SubdivisionGUI {
         tempFrame.setVisible(true);
         return tempFrame;
     }
-    
+
     //Change panel
     private void changePanel(JPanel panel) {
         this.frame.getContentPane().removeAll();
         this.frame.add(panel);
         this.frame.pack();
     }
-    
+
     //Panel to create land
     private class LandCreatorPanel extends JPanel {
-        
+
         private final JTextField widthTextField;
         private final JTextField heightTextField;
         private int width;
         private int height;
-        
+
         private final JLabel errorLabel;
-        
+
         private final SubdivisionGUI gui;
-        
+
         public LandCreatorPanel(SubdivisionGUI gui) {
-            super(new BorderLayout(10,10));
+            super(new BorderLayout(10, 10));
             this.gui = gui;
-            
+
             //Set up program name
             JLabel programName = new JLabel("Land Subdivider", JLabel.CENTER);
             programName.setFont(new Font("Dialog", Font.BOLD, 20));
-            
+
             //Set up text field area
             JPanel sizePanel = new JPanel(new GridLayout(2, 2, 10, 0));
             JLabel widthLabel = new JLabel("Width", JLabel.CENTER);
@@ -75,7 +75,7 @@ public class SubdivisionGUI {
             sizePanel.add(this.widthTextField);
             sizePanel.add(this.heightTextField);
             sizePanel.setBorder(new EmptyBorder(0, 10, 0, 10));
-            
+
             //Set up button area (make button then add its listener)
             JPanel methodPanel = new JPanel(new GridLayout(1, 5, 10, 0));
             JButton bruteForceButton = new JButton("Brute Force");
@@ -105,28 +105,28 @@ public class SubdivisionGUI {
                     }
                 }
             });
-            
+
             //Add button area elements to method panel
             methodPanel.add(bruteForceButton);
             methodPanel.add(greedyButton);
             methodPanel.add(exactButton);
             methodPanel.setBorder(new EmptyBorder(10, 10, 0, 10));
-            
+
             //Add the text field area and button area to a temp panel
             JPanel tempPanel = new JPanel(new BorderLayout());
             tempPanel.add(sizePanel, BorderLayout.CENTER);
             tempPanel.add(methodPanel, BorderLayout.SOUTH);
-            
+
             //Set up error label
             this.errorLabel = new JLabel("", JLabel.CENTER);
             this.errorLabel.setBorder(new EmptyBorder(0, 0, 0, 0));
-            
+
             //Add elements to panel
             super.add(programName, BorderLayout.NORTH);
             super.add(tempPanel, BorderLayout.CENTER);
             super.add(this.errorLabel, BorderLayout.SOUTH);
         }
-        
+
         //Checks for errors in text fields
         private boolean checkForErrors() {
             //Check if either are empty
@@ -134,35 +134,36 @@ public class SubdivisionGUI {
                 changeErrorMessage("One or more text fields are empty!");
                 return true;
             }
-            
+
             //Try to convert text fields from string to int
             try {
                 this.width = Integer.parseInt(this.widthTextField.getText());
                 this.height = Integer.parseInt(this.heightTextField.getText());
-            } catch (NumberFormatException ex){
+            }
+            catch (NumberFormatException ex) {
                 changeErrorMessage("Value is not an integer!");
                 return true;
             }
-            
+
             //Using boolean here because Java does not like me returning true
             //on the if statement below if there is an error
             boolean error = false;
-            
+
             //Make sure the values are more than 0
             if ((this.width) <= 0 || (this.height <= 0)) {
                 changeErrorMessage("One or more values are less or equal to 0!");
                 error = true;
             }
-            
+
             return error;
         }
-        
+
         private void changeErrorMessage(String text) {
             //Set text to nothing
             this.errorLabel.setText("");
             this.errorLabel.setBorder(new EmptyBorder(0, 0, 0, 0));
             this.gui.frame.pack();
-            
+
             //Return if null or empty
             if (text == null) {
                 return;
@@ -170,47 +171,47 @@ public class SubdivisionGUI {
             if (text.isEmpty()) {
                 return;
             }
-            
+
             //Set real text
             this.errorLabel.setText(text);
             this.errorLabel.setBorder(new EmptyBorder(0, 10, 10, 10));
             this.gui.frame.pack();
         }
     }
-    
+
     private class LandDisplayPanel extends JPanel {
-        
+
         public LandDisplayPanel(SubdivisionGUI gui, Subdivision subdivision) {
             super(new BorderLayout(10, 10));
-            
+
             //Create pre division land area
             Land preDivision = new Land(0, 0, subdivision.width, subdivision.height);
             JLabel preNameLabel = new JLabel("Original Area", JLabel.CENTER);
             LandArea beforeSubdivsion = new LandArea(preDivision);
             JLabel preCostLabel = new JLabel("$" + Integer.toString(subdivision.getLandPrice(preDivision)), JLabel.CENTER);
-            
-            JPanel preDivisionPanel = new JPanel(new BorderLayout(10,10));
+
+            JPanel preDivisionPanel = new JPanel(new BorderLayout(10, 10));
             preDivisionPanel.add(preNameLabel, BorderLayout.NORTH);
             preDivisionPanel.add(beforeSubdivsion, BorderLayout.CENTER);
             preDivisionPanel.add(preCostLabel, BorderLayout.SOUTH);
-            
+
             JLabel postNameLabel = new JLabel("Subdivided Area", JLabel.CENTER);
             LandArea afterSubdivsion = new LandArea(subdivision.calculate(), subdivision.width, preDivision.height);
             JLabel postCostLabel = new JLabel("$" + Integer.toString(subdivision.getPrice()), JLabel.CENTER);
-            
-            JPanel postDivisionPanel = new JPanel(new BorderLayout(10,10));
+
+            JPanel postDivisionPanel = new JPanel(new BorderLayout(10, 10));
             postDivisionPanel.add(postNameLabel, BorderLayout.NORTH);
             postDivisionPanel.add(afterSubdivsion, BorderLayout.CENTER);
             postDivisionPanel.add(postCostLabel, BorderLayout.SOUTH);
-            
+
             //Combine land areas into one panel
             JPanel landAreas = new JPanel();
             landAreas.add(preDivisionPanel, BorderLayout.WEST);
             landAreas.add(postDivisionPanel, BorderLayout.EAST);
-            
+
             //Land information
             JLabel infoLabel = new JLabel("Each colour is a different subdivision", JLabel.CENTER);
-            
+
             //New area button
             JButton newAreaButton = new JButton("New Area");
             newAreaButton.addActionListener(new ActionListener() {
@@ -219,20 +220,20 @@ public class SubdivisionGUI {
                     gui.changePanel(new LandCreatorPanel(gui));
                 }
             });
-            
+
             //Add elements to panel
             super.add(landAreas, BorderLayout.NORTH);
             super.add(infoLabel, BorderLayout.CENTER);
             super.add(newAreaButton, BorderLayout.SOUTH);
         }
-        
+
         private class LandArea extends JPanel {
-            
+
             private final int width;
             private final int height;
             private int scale;
             private final ArrayList<Land> landList;
-            
+
             public LandArea(Land land) {
                 this.landList = new ArrayList<>();
                 this.landList.add(land);
@@ -240,26 +241,26 @@ public class SubdivisionGUI {
                 this.height = land.height;
                 setUpPanel();
             }
-            
+
             public LandArea(ArrayList<Land> landList, int width, int height) {
                 this.landList = landList;
                 this.width = width;
                 this.height = height;
                 setUpPanel();
             }
-            
+
             private void setUpPanel() {
                 this.scale = 95;
                 super.setPreferredSize(new Dimension(this.width * this.scale, this.height * this.scale));
                 super.setBackground(Color.lightGray);
             }
-            
+
             @Override
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                
+
                 //Convert the land into an array format
-                Color[][] displayArray  = new Color[this.width][this.height];
+                Color[][] displayArray = new Color[this.width][this.height];
                 int num = 0;
                 for (Land land : this.landList) {
                     Color landColor = getRandomColor();
@@ -270,7 +271,7 @@ public class SubdivisionGUI {
                     }
                     num++;
                 }
-                
+
                 //Draw land on screen
                 for (int x = 0; x < displayArray.length; x++) {
                     for (int y = 0; y < displayArray[0].length; y++) {
@@ -279,7 +280,7 @@ public class SubdivisionGUI {
                     }
                 }
             }
-            
+
             //Used to color land
             private Color getRandomColor() {
                 Random rand = new Random();
