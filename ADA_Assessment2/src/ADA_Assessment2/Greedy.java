@@ -4,8 +4,15 @@ import java.util.ArrayList;
 
 /*
 
+The Greedy class will only return value for lands that are within the bounds 
+of the Subdivision.landValues (see Subdivision.loadLandValues). Currently set to
+6x6 at the moment of writing this comment. 
 
-*/
+This is beacause dividing the land will cost more than the divisions are worth 
+(value is less than division cost). This is how the greedy algorithm should work
+so this is okay
+
+ */
 public class Greedy extends Subdivision {
 
     public Greedy(int width, int height) {

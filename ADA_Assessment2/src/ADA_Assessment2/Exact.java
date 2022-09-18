@@ -22,12 +22,13 @@ public class Exact extends Subdivision {
 
         // Return list
         return bestDivision.list;
-
     }
 
     private BestDivision findExact(Land startLand) {
         // Set best as the current division
         BestDivision best = new BestDivision(getLandPrice(startLand), startLand);
+
+        return best;
     }
 
     private class BestDivision {
