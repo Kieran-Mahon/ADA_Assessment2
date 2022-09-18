@@ -27,7 +27,7 @@ public abstract class Subdivision {
     }
     
     private void loadLandValues() {
-        this.landValues = new int[][]{
+        this.landValues = new int[][] {
             //1   2    3    4    5    6
             {20, 40, 100, 130, 150, 200}, //   1
             {40, 140, 250, 320, 400, 450}, //  2
@@ -35,12 +35,12 @@ public abstract class Subdivision {
             {130, 320, 420, 500, 600, 700}, // 4
             {150, 400, 450, 600, 700, 800}, // 5
             {200, 450, 500, 700, 800, 900}}; //6
-    }
+        }
     
     //Get price of a piece of land
     protected int getLandPrice(Land land) {
         //If out of land values bounds then return a price of $0
-        if ((land.width > 6) ||(land.height > 6)) {
+        if ((land.width > this.landValues.length) ||(land.height > this.landValues[0].length)) {
             return 0;
         }
         return this.landValues[land.width - 1][land.height - 1];
