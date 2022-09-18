@@ -55,7 +55,10 @@ public class Greedy extends Subdivision {
 
             xTrack += startLand.x;
             yTrack += startLand.y;
-
+            
+            if (startLand.width - xTrack < 0 || startLand.height - yTrack < 0)
+                return bestDivisions;
+            
             Land a = new Land(xTrack, startLand.y, startLand.width - xTrack, startLand.height);
             Land b = new Land(startLand.x, yTrack, xTrack, startLand.height - yTrack);
 
