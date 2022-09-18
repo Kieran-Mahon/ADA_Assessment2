@@ -18,6 +18,6 @@ public class TestClass {
         // Exact
         Exact exact = new Exact(7, 7);
         exact.calculate();
-        assert exact.price == 990 "Not correct";
+        assert exact.price == 990: "Not correct";
     }
 }
