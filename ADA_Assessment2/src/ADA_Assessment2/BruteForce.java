@@ -10,6 +10,9 @@ public class BruteForce extends Subdivision {
 
     @Override
     public ArrayList<Land> calculate() {
+        // Say which method got called
+        System.out.println("Brute force method called!");
+        
         //Call the divide function
         Land startLand = new Land(0, 0, this.width, this.height);
         BestDivision bestDivision = divide(startLand);
