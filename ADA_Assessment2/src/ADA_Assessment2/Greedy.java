@@ -134,6 +134,7 @@ public class Greedy extends Subdivision {
 
         return best;
     }
+
     
     private BestDivision findGreedy2(Land land) {
         // Set best as the current division
