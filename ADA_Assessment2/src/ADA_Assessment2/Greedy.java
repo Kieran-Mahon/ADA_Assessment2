@@ -11,7 +11,6 @@ This is beacause dividing the land will cost more than the divisions are worth
 (value is less than division cost). This is how the greedy algorithm should work
 so this is okay
  */
-
 public class Greedy extends Subdivision {
 
     public Greedy(int width, int height) {
@@ -23,7 +22,7 @@ public class Greedy extends Subdivision {
     public ArrayList<Land> calculate() {
         // Say which method got called
         System.out.println("Greedy method called!");
-        
+
         // Call the divide function
         Land startLand = new Land(0, 0, this.width, this.height);
         BestDivision bestDivision = findGreedy2(startLand);
@@ -135,7 +134,6 @@ public class Greedy extends Subdivision {
         return best;
     }
 
-    
     private BestDivision findGreedy2(Land land) {
         // Set best as the current division
         BestDivision best = new BestDivision(getLandPrice(land), land);
@@ -146,16 +144,16 @@ public class Greedy extends Subdivision {
             //Divide the land into 2 parts (A and B)
             Land a = new Land(land.x, land.y, i, land.height);
             Land b = new Land(land.x + i, land.y, land.width - i, land.height);
-            
+
             // Calculate the cost of the division
             int cost = land.height * this.divideCost;
-            
+
             // Add A and B to a best division for easier calculation
             BestDivision aBD = new BestDivision(getLandPrice(a), a);
             BestDivision bBD = new BestDivision(getLandPrice(b), b);
             BestDivision divison = new BestDivision(aBD, bBD); //Add a and b together
             divison.price -= cost; //Remove cost
-            
+
             // Check if this divide better than the current best
             if ((divison.price) > best.price) {
                 best = divison;
@@ -168,16 +166,16 @@ public class Greedy extends Subdivision {
             //Divide the land into 2 parts (A and B)
             Land a = new Land(land.x, land.y, land.width, i);
             Land b = new Land(land.x, land.y + i, land.width, land.height - i);
-            
+
             // Calculate the cost of the division
             int cost = land.width * this.divideCost;
-            
+
             // Add A and B to a best division for easier calculation
             BestDivision aBD = new BestDivision(getLandPrice(a), a);
             BestDivision bBD = new BestDivision(getLandPrice(b), b);
             BestDivision divison = new BestDivision(aBD, bBD); //Add a and b together
             divison.price -= cost; //Remove cost
-            
+
             // Check if this divide is the best
             if ((divison.price) > best.price) {
                 best = divison;
@@ -190,10 +188,10 @@ public class Greedy extends Subdivision {
             //Get a and bbest
             BestDivision aBest = findGreedy2(best.list.get(0));
             BestDivision bBest = findGreedy2(best.list.get(1));
-            
+
             //Add both together
             best = new BestDivision(aBest, bBest);
-            
+
             //Remove cost
             best.price -= bestDivideCost;
         }
