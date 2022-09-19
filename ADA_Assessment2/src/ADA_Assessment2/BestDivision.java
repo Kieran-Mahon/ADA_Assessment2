@@ -24,5 +24,5 @@ public class BestDivision {
             this.list.addAll(aSide.list);
             this.list.addAll(bSide.list);
         }
+    }
 }
-
