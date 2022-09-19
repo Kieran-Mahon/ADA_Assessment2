@@ -1,8 +1,6 @@
 package ADA_Assessment2;
 
-/*
- * @author Kieran
- */
+//Class to run the GUI
 public class MainClass {
     public static void main(String[] args) {
         SubdivisionGUI gui = new SubdivisionGUI();

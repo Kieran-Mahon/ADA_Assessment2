@@ -3,7 +3,6 @@ package ADA_Assessment2;
 import java.util.ArrayList;
 
 /*
-
 The Greedy class will only return value for lands that are within the bounds 
 of the Subdivision.landValues (see Subdivision.loadLandValues). Currently set to
 6x6 at the moment of writing this comment. 
@@ -11,8 +10,8 @@ of the Subdivision.landValues (see Subdivision.loadLandValues). Currently set to
 This is beacause dividing the land will cost more than the divisions are worth 
 (value is less than division cost). This is how the greedy algorithm should work
 so this is okay
-
  */
+
 public class Greedy extends Subdivision {
 
     public Greedy(int width, int height) {
@@ -130,24 +129,5 @@ public class Greedy extends Subdivision {
         }
 
         return best;
-    }
-
-    private class BestDivision {
-
-        private int price;
-        private ArrayList<Land> list = new ArrayList<>();
-
-        // Constructor used for 1 piece of land
-        public BestDivision(int price, Land cell) {
-            this.price = price;
-            this.list.add(cell);
-        }
-
-        // Constructor used for combining two best divisions
-        public BestDivision(BestDivision aSide, BestDivision bSide) {
-            this.price = aSide.price + bSide.price;
-            this.list.addAll(aSide.list);
-            this.list.addAll(bSide.list);
-        }
     }
 }
