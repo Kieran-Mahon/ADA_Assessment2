@@ -2,6 +2,7 @@ package ADA_Assessment2;
 
 public class TestClass {
 
+    //Class to test some functions
     public static void main(String[] args) {
         // Testing 
 
