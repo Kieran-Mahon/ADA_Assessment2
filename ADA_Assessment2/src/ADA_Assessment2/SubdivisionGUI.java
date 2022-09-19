@@ -233,6 +233,7 @@ public class SubdivisionGUI {
             private final int height;
             private int scale;
             private final ArrayList<Land> landList;
+            private int colorSeed;
 
             public LandArea(Land land) {
                 this.landList = new ArrayList<>();
@@ -251,6 +252,7 @@ public class SubdivisionGUI {
 
             private void setUpPanel() {
                 this.scale = 95;
+                this.colorSeed = new Random().nextInt();
                 super.setPreferredSize(new Dimension(this.width * this.scale, this.height * this.scale));
                 super.setBackground(Color.lightGray);
             }
@@ -258,12 +260,13 @@ public class SubdivisionGUI {
             @Override
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
+                Random rand = new Random(this.colorSeed);
 
                 //Convert the land into an array format
                 Color[][] displayArray = new Color[this.width][this.height];
                 int num = 0;
                 for (Land land : this.landList) {
-                    Color landColor = getRandomColor();
+                    Color landColor = getRandomColor(rand);
                     for (int w = 0; w < land.width; w++) {
                         for (int h = 0; h < land.height; h++) {
                             displayArray[land.x + w][land.y + h] = landColor;
@@ -282,8 +285,7 @@ public class SubdivisionGUI {
             }
 
             //Used to color land
-            private Color getRandomColor() {
-                Random rand = new Random();
+            private Color getRandomColor(Random rand) {
                 int r;
                 int g;
                 int b;
