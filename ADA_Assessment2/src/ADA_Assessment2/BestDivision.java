@@ -5,6 +5,7 @@ import java.util.ArrayList;
 /**
  *
  * @author Callum
+ * Class which holds information about divisions
  */
 public class BestDivision {
 
