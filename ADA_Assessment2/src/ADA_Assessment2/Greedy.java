@@ -113,16 +113,17 @@ public class Greedy extends Subdivision {
         }
 
         // If the size of the list is NOT 1 then it is NOT the original land
-        // Go down the most expensive division
+        // Go down the LEAST expensive side of the division and keep the MOST
+        // expensive land of the division
         if (best.list.size() != 1) {
-            // Index 0 means the OTHER land which is not touched
-            BestDivision tempBest = new BestDivision(best.price, best.list.get(0));
+            // Index 1 means the most expensive land which is not touched
+            BestDivision tempBest = new BestDivision(best.price, best.list.get(1));
 
-            // Index 1 means the most expensive land which gets checked
-            BestDivision divisionFound = findGreedy(best.list.get(1));
+            // Index 0 means the other land which gets checked
+            BestDivision divisionFound = findGreedy(best.list.get(0));
 
             tempBest.list.addAll(divisionFound.list);
-            tempBest.price += divisionFound.price - getLandPrice(best.list.get(1));
+            tempBest.price += divisionFound.price - getLandPrice(best.list.get(0));
 
             // Set best division
             best = tempBest;
