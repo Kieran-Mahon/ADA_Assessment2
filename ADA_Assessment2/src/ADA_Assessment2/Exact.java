@@ -31,6 +31,16 @@ public class Exact extends Subdivision {
         // Set best as the current division
         BestDivision best = new BestDivision(getLandPrice(startLand), startLand);
 
+        Land[][] landArray = new Land[startLand.height][startLand.width];
+        
+        for (int i = 0; i < startLand.height; i++) {
+            for (int j = 0; j < startLand.width; j++) {
+                Land temp  = new Land(0, 0);
+                landArray[i][j];
+            }
+
+        }
+
         return best;
     }
 }
