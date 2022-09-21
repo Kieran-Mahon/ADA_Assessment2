@@ -13,69 +13,70 @@ public class BruteForce extends Subdivision {
         // Say which method got called
         System.out.println("Brute force method called!");
 
-        //Call the divide function
+        // Call the divide function
         Land startLand = new Land(0, 0, this.width, this.height);
         BestDivision bestDivision = divide(startLand);
 
-        //Assign price
+        // Assign price
         this.price = bestDivision.price;
 
-        //Show text output
+        // Show text output
         System.out.println(textDisplay(bestDivision.list, bestDivision.price));
 
-        //Return list
+        // Return list
         return bestDivision.list;
     }
 
-    //Find best division then pass it up
+    // Find best division then pass it up
     private BestDivision divide(Land land) {
-        //Set best as the current division
-        BestDivision best = new BestDivision(getLandPrice(land), land);
+        // Set best as the current division
+        BestDivision best = new BestDivision(getLandValue(land), land);
 
-        //Vertical
+        // Vertical
         for (int i = 1; i < land.width; i++) {
-            //Divide the land into 2 parts (A and B)
+            // Divide the land into 2 parts (A and B)
             Land a = new Land(land.x, land.y, i, land.height);
             Land b = new Land(land.x + i, land.y, land.width - i, land.height);
 
-            //Calculate the cost of the division
+            // Calculate the cost of the division
             int cost = land.height * this.divideCost;
 
-            //Get the best divisions from side A and side B
+            // Get the best divisions from side A and side B
             BestDivision bestA = divide(a);
             BestDivision bestB = divide(b);
 
-            //Check if both prices and division cost added together make it the best
+            // Check if both prices and division cost added together make it the best
             if ((bestA.price + bestB.price - cost) > best.price) {
-                //Combine them and make it the new best
+                // Combine them and make it the new best
                 best = new BestDivision(bestA, bestB);
-                //Remove the cost
+                // Remove the cost
                 best.price -= cost;
             }
         }
 
-        //Horizontal
+        // Horizontal
         for (int i = 1; i < land.height; i++) {
-            //Divide the land into 2 parts (A and B)
+            // Divide the land into 2 parts (A and B)
             Land a = new Land(land.x, land.y, land.width, i);
             Land b = new Land(land.x, land.y + i, land.width, land.height - i);
 
-            //Calculate the cost of the division
+            // Calculate the cost of the division
             int cost = land.width * this.divideCost;
 
-            //Get the best divisions from side A and side B
+            // Get the best divisions from side A and side B
             BestDivision bestA = divide(a);
             BestDivision bestB = divide(b);
 
-            //Check if both prices and division cost added together make it the best
+            // Check if both prices and division cost added together make it the best
             if ((bestA.price + bestB.price - cost) > best.price) {
-                //Combine them and make it the new best
+                // Combine them and make it the new best
                 best = new BestDivision(bestA, bestB);
-                //Remove the cost
+                // Remove the cost
                 best.price -= cost;
             }
         }
 
+        // Return the best division
         return best;
     }
 }
