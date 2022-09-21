@@ -2,7 +2,9 @@ package ADA_Assessment2;
 
 public class TestClass {
 
-    //Class to test some functions
+    // Class to test if the program is working
+    // Will throw an error if there is a problem
+    
     public static void main(String[] args) {
         // Testing 
 
